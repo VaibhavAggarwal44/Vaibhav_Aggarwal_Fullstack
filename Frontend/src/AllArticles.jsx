@@ -7,6 +7,7 @@ import {
   FaThumbsDown,
   FaComment,
   FaEyeSlash,
+  FaSearch
 } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { IconContext } from "react-icons/lib";
@@ -123,7 +124,7 @@ const AllArticles = () => {
 
       <div className="justify-content-center">
         <div className="container w-50">
-          <form>
+          <form className="d-flex">
             <div class="input-group input-group-lg">
               <input
                 type="text"
@@ -143,9 +144,11 @@ const AllArticles = () => {
               onClick={(e) => {
                 handleSearchChange(e);
               }}
-              className="button-checker2 h-75"
+              className="button-checker2 h-100 p-1"
             >
-              Search
+              <IconContext.Provider value={{ color: 'white', size: 20, fontWeight:100 }}>
+                <FaSearch/>
+              </IconContext.Provider>
             </button>
           </form>
         </div>

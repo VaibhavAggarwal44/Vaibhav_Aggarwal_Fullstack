@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "react-bootstrap/Image";
 import "./styles.css";
-import Navbar from "../NavBar/Navbar";
 
 const Login = () => {
   const [username, usernameupdate] = useState("");
@@ -112,6 +111,7 @@ const Login = () => {
             </div>
           </form>
         </div>
+        
         <ToastContainer />
       </div>
     </>
