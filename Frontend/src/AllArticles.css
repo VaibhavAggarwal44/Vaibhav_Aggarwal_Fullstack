@@ -1,0 +1,16 @@
+.checker2 button{
+    width: 21.2rem !important;
+    height: 4rem;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    border: 2px solid black !important;
+}
+
+.paginator nav:hover{
+    cursor: pointer;
+}
+
+.table-row{
+    cursor: pointer;
+}

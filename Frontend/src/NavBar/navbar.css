@@ -1,0 +1,7 @@
+.navbar-hover a:hover{
+    cursor: pointer;
+}
+
+.navbar-width{
+    /* height: 200px; */
+}
