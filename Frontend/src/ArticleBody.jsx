@@ -45,7 +45,7 @@ function ArticleBody() {
   const func2 = () => {
     let articleId = localStorage.getItem("articleId");
     console.log(articleId);
-    fetch(`http://localhost:8081/apis/${articleId}`)
+    fetch(`http://localhost:8081/apis/${articleId}/${username}`)
       .then((response) => {
         // console.log(response);
         return response.json();

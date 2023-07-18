@@ -53,6 +53,36 @@ public class Article {
         this.dislikedBy="";
         this.id=generateUniqueID();
     }
+    static class customComparator implements Comparator<Article>{
+        public int compare(Article o1, Article o2){
+            if(o1.getLikes()>o2.getLikes()){
+                return -1;
+            }
+            else if(o2.getLikes()>o1.getLikes()){
+                return 1;
+            }
+            else{
+                if(o1.getViews()>o2.getViews()){
+                    return -1;
+                }
+                else if(o2.getViews()>o1.getViews()){
+                    return 1;
+                }
+                else{
+                    if(o1.getDislikes()<o2.getDislikes()){
+                        return -1;
+                    }
+                    else{
+                        return 1;
+                    }
+
+
+                }
+
+            }
+        }
+
+    }
 
 
 
@@ -79,6 +109,11 @@ public class Article {
 
     public List<Article> L_SORT(List<Article> list){
         Collections.sort(list,new Article.LikeComparator());
+        return list;
+    }
+
+    public List<Article> C_SORT(List<Article> list){
+        Collections.sort(list,new Article.customComparator());
         return list;
     }
 

@@ -54,11 +54,17 @@ public class ArticleSearchUtil {
         return matchQuery.field("articleBody").value(word).fuzziness("2").build();
     }
 
+    /**
+     * This function builds and returns fuzzyquery on heading field
+     */
     public static FuzzyQuery headingFuzzySearch(String word){
         val matchQuery=new FuzzyQuery.Builder();
         return matchQuery.field("heading").value(word).fuzziness("2").build();
     }
 
+    /**
+     * This function acts as a supplier of query built in function headingFuzzySearch
+     */
     public static Supplier<Query> headingFuzzySupplier(String word){
         Supplier<Query> supplier=()->Query.of(q->q.fuzzy(headingFuzzySearch(word)));
         return supplier;

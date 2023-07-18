@@ -134,9 +134,12 @@ public class ArticleController {
      * It also increases its views by 1.
      * @param id
      */
-    @GetMapping("/{id}")
-    public Article updateArticleView(@PathVariable String id){
+    @GetMapping("/{id}/{username}")
+    public Article updateArticleView(@PathVariable String id,@PathVariable String username){
         Article article=articleService.findById(id);
+        if(username.equals(article.getCreatedBy())){
+            return article;
+        }
         article=articleService.updateArticleViews(article,id);
         return article;
     }
@@ -185,8 +188,8 @@ public class ArticleController {
             List<Hit<Article>> listOfHits = searchResponse.hits().hits(); //fuzzy
             List<Hit<Article>> listOfHits2=searchResponse2.hits().hits(); //fuzzy heading search
 
-            List<Article> hlist=articleService.headingInfix(word);  //heading and ispublic
-            List<Article> hlist2=articleService.headingInfix2(word,username); //heading and username
+            List<Article> hlist=articleService.headingInfix(word);  //heading and ispublic substring matching
+            List<Article> hlist2=articleService.headingInfix2(word,username); //heading and username substring matching
 
             List<Article> list = infixFinder(word);  //articlebody and ispublic
             List<Article> list2=articleService.infixFinder2(word,username);  //articlebody and username
@@ -206,9 +209,13 @@ public class ArticleController {
                 for (Hit<Article> item : listOfHits) {
                     hlist.add(item.source());
                 }
+                Article a=new Article();
+                a.C_SORT(hlist);
                 System.out.println("damn");
                 return hlist;
             }else{
+                Article a=new Article();
+                a.C_SORT(hlist);
                 return hlist;
             }
         }else{
@@ -217,7 +224,7 @@ public class ArticleController {
             SearchResponse<Article> searchResponse2=articleSearchService.matchAllHeadingService(query);
 
             System.out.println(searchResponse.hits().hits().toString());
-            
+
             List<Hit<Article>> listOfHits = searchResponse.hits().hits();
             List<Hit<Article>> listOfHits2 = searchResponse2.hits().hits();
             System.out.println("contension");
@@ -231,6 +238,10 @@ public class ArticleController {
             for (Hit<Article> item : listOfHits) {
                 list.add(item.source());
             }
+
+            Article a=new Article();
+
+            a.C_SORT(list);
 
             Set<Article> set=new LinkedHashSet<>(list);
             list.clear();
