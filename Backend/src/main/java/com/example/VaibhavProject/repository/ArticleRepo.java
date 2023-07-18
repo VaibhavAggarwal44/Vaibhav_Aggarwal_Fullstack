@@ -16,9 +16,10 @@ public interface ArticleRepo extends ElasticsearchRepository<Article,String> {
     @Query("{\"match\": {\"createdBy\": {\"query\": \"?0\"}}}")
     Page<Article> findByName(String name, Pageable pageable);
 
-
     List<Article> findByCreatedBy(String name);
+
     List<Article> findByArticleBodyAndIsPublic(String query,boolean isPublic);
+
     List<Article> findByIsPublicOrCreatedBy(boolean isPublic,String createdBy);
 
     List<Article> findByCreatedByAndIsPublic(String createdBy,boolean isPublic);
@@ -31,5 +32,4 @@ public interface ArticleRepo extends ElasticsearchRepository<Article,String> {
 
     List<Article> findByArticleBodyContainingAndCreatedBy(String a,String b);
 
-//    List<Article> findByArticleBodyContainingAndCreatedBy(String s,boolean isPublic);
 }

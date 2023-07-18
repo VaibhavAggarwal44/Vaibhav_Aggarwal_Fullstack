@@ -19,22 +19,30 @@ import java.util.UUID;
 public class Article {
 //    public int id;
     public String id;
+
     public int likes;
+
     public int dislikes;
+
     public boolean isPublic;
+
     public int views;
+
     public String articleBody;
+
     public String heading;
+
     public String displayBody;
+
     public String createdBy;
+
     public String likedBy;
+
     public String dislikedBy;
 
     public static String generateUniqueID() {
         // Generate a random UUID (Universally Unique Identifier)
         UUID uuid = UUID.randomUUID();
-
-        // Remove the hyphens from the UUID and take the first 10 characters
         String id = uuid.toString().replaceAll("-", "");
 
         return id;

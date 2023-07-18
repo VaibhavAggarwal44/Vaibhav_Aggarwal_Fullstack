@@ -1,6 +1,5 @@
 package com.example.VaibhavProject.service;
 
-import com.example.VaibhavProject.model.Article;
 import com.example.VaibhavProject.model.Comment;
 import com.example.VaibhavProject.repository.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;

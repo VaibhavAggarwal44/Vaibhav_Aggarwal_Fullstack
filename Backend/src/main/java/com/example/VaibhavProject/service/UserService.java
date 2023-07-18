@@ -10,7 +10,6 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-
     public boolean Checker(String id){
         return userRepo.existsById(id);
     }

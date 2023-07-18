@@ -32,8 +32,7 @@ public class Comment {
         // Generate a random UUID (Universally Unique Identifier)
         UUID uuid = UUID.randomUUID();
 
-        // Remove the hyphens from the UUID and take the first 10 characters
-        String id = uuid.toString().replaceAll("-", "").substring(0, 10);
+        String id = uuid.toString().replaceAll("-", "");
 
         return id;
     }
