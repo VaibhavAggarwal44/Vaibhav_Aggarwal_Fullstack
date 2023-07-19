@@ -92,7 +92,7 @@ const AllArticles = () => {
     return true;
   };
 
-  const handleSearchChange = async (e) => {
+  const handleSearchChange =  (e) => {
     e.preventDefault();
     setArticles([]);
 
@@ -110,7 +110,7 @@ const AllArticles = () => {
     setflag(false);
     // var query = str.replace("/", " ");
     var query = str.replace(" ", "--");
-    const dat = await fetch(
+    const dat = fetch(
       `http://localhost:8081/apis/search/${query}/${username}`
     )
       .then((response) => {

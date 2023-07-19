@@ -24,23 +24,35 @@ public class ArticleController {
     @Autowired
     private ArticleSearchService articleSearchService;
 
+    /**
+     * Returns list of all public articles
+     */
     @GetMapping("/articles")
     public List<Article> getAllArticles(){
         List<Article> list=articleService.findPublicArticles("");
         return list;
     }
 
+    /**
+     * Returns list of articles that are createdBy 'username'
+     */
     @GetMapping("/checker/{id}")
     public List<Article> findByUsername(@PathVariable String id){
         return articleService.findbyusername(id);
     }
 
+    /**
+     * Returns public articles that contain query in article body
+     */
     @GetMapping("/public/{query}")
     public List<Article> findPublicArticles(@PathVariable String query){
         String word=query.replace("--"," ");
         return articleService.searchPublicArticles(word);
     }
 
+    /**
+     * Returns list of sorted articles on the basis of likes
+     */
     @GetMapping("/articles/sortLike/{username}")
     public List<Article> sortByLikes(@PathVariable String username){
         List<Article> list=articleService.findPublicArticles(username);
@@ -51,6 +63,9 @@ public class ArticleController {
         return list;
     }
 
+    /**
+     * Returns list of all public articles
+     */
     @GetMapping("/articles/userArticles")
     public Iterable<Article> userArticles(){
         Iterable<Article> list1=articleService.getArticles();
@@ -66,6 +81,9 @@ public class ArticleController {
         return list1;
     }
 
+    /**
+     * Returns list of articles sorted on the basis of dislikes
+     */
     @GetMapping("/articles/sortDislike")
     public Iterable<Article> sortByDislikes(){
         Iterable<Article> list1=articleService.getArticles();
@@ -82,6 +100,9 @@ public class ArticleController {
         return list1;
     }
 
+    /**
+     * Returns list of articles sorted on the basis of views
+     */
     @GetMapping("/articles/sortView/{username}")
     public List<Article> sortByViews(@PathVariable String username){
         List<Article> list=articleService.findPublicArticles(username);
@@ -126,6 +147,13 @@ public class ArticleController {
             article=articleService.updateArticleLikes(article,id,user);
         else if(ld.equals("dislike"))
             article=articleService.updateArticleDislikes(article,id,user);
+        else if(ld.equals("unlike")){
+            article=articleService.unlike(article,id,user);
+        }
+        else if(ld.equals("undislike")){
+            article=articleService.undislike(article,id,user);
+        }
+
         return article;
     }
 

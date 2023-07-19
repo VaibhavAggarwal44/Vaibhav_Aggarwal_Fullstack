@@ -62,6 +62,9 @@ function ArticleBody() {
         if (data.likedBy.includes(username)) {
           setLikeColor("blue");
           setDislikeColor("grey");
+        }else{
+          setLikeColor("grey");
+          setDislikeColor("grey");
         }
       })
       .catch((err) => {
@@ -73,18 +76,32 @@ function ArticleBody() {
     e.preventDefault();
     let articleId = localStorage.getItem("articleId");
     // console.log(likeColor)
-    setLikeColor("blue");
-    setDislikeColor("grey");
+    if(likeColor==="grey"){
+      setLikeColor("blue");
+      setDislikeColor("grey");
 
-    fetch(`http://localhost:8081/apis/${articleId}/${username}/like`)
-      .then((response) => {
-        console.log("response.json()");
-        return response.json();
-      })
-      .then((data) => {
-        setLikes(data.likes);
-        setDisLikes(data.dislikes);
-      });
+      fetch(`http://localhost:8081/apis/${articleId}/${username}/like`)
+        .then((response) => {
+          console.log("response.json()");
+          return response.json();
+        })
+        .then((data) => {
+          setLikes(data.likes);
+          setDisLikes(data.dislikes);
+        });
+    }else{
+      setLikeColor("grey");
+      fetch(`http://localhost:8081/apis/${articleId}/${username}/unlike`)
+        .then((response) => {
+          console.log("response.json()");
+          return response.json();
+        })
+        .then((data) => {
+          setLikes(data.likes);
+          setDisLikes(data.dislikes);
+        });
+    }
+    
 
     return;
   };
@@ -93,7 +110,8 @@ function ArticleBody() {
     e.preventDefault();
     let articleId = localStorage.getItem("articleId");
     // console.log(likeColor)
-    setDislikeColor("red");
+    if(dislikeColor==="grey"){
+      setDislikeColor("red");
     setLikeColor("grey");
     fetch(`http://localhost:8081/apis/${articleId}/${username}/dislike`)
       .then((response) => {
@@ -104,6 +122,20 @@ function ArticleBody() {
         setLikes(data.likes);
         setDisLikes(data.dislikes);
       });
+    }else{
+      setDislikeColor("grey");
+    // setLikeColor("grey");
+    fetch(`http://localhost:8081/apis/${articleId}/${username}/undislike`)
+      .then((response) => {
+        console.log("response.json()");
+        return response.json();
+      })
+      .then((data) => {
+        setLikes(data.likes);
+        setDisLikes(data.dislikes);
+      });
+    }
+    
 
     return;
   };

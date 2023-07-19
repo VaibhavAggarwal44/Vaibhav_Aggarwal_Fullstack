@@ -113,6 +113,34 @@ public class ArticleService {
         return article;
     }
 
+    public Article unlike(Article article,String id,String likedBy){
+        Article article1  = articleRepo.findById(id).get();
+        article1.setLikes(article.getLikes()-1);
+
+        String s=article1.getLikedBy();
+//        s+=likedBy+" ";
+//        article1.setLikedBy(s);
+        String replace = s.replace(likedBy+" ", "");
+        article1.setLikedBy(replace);
+        article=article1;
+        articleRepo.save(article);
+        return article;
+    }
+
+    public Article undislike(Article article,String id,String dislikedBy){
+        Article article1  = articleRepo.findById(id).get();
+        article1.setDislikes(article.getDislikes()-1);
+
+        String s=article1.getDislikedBy();
+//        s+=likedBy+" ";
+//        article1.setLikedBy(s);
+        String replace = s.replace(dislikedBy+" ", "");
+        article1.setDislikedBy(replace);
+        article=article1;
+        articleRepo.save(article);
+        return article;
+    }
+
     public Article updateArticleDislikes(Article article, String id,String dislikedBy) {
         System.out.println("check");
         Article article1  = articleRepo.findById(id).get();

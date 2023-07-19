@@ -55,6 +55,9 @@ const SearchBar = () => {
         return response.json();
       })
       .then((data) => {
+        if(!data.length){
+          alert("no such element exists")
+        }
         setUsers(data);
         console.log(users);
         // console.log(data);

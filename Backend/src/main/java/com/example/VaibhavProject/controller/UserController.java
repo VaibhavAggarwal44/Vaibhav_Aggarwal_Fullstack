@@ -17,11 +17,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Returns list of all users
+     */
     @GetMapping("/users")
     public Iterable<User> getAllArticles(){
         return userService.getUsers();
     }
 
+    /**
+     * inserts a user(register) in the database
+     */
     @PostMapping("/register")
     public User registerUser(@RequestBody User user1) throws NoSuchElementException{
         String uid=user1.getUsername();
@@ -40,6 +46,9 @@ public class UserController {
 
     }
 
+    /**
+     *  this function
+     */
     @PostMapping("/login")
     public User loginUser(@RequestBody User user) throws NoSuchElementException {
         String uid=user.getUsername();

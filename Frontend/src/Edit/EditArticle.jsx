@@ -30,7 +30,7 @@ function EditArticle() {
       navigate("/login");
     } else {
       console.log("fetcher");
-      fetch(`http://localhost:8081/apis/${articleId}`)
+      fetch(`http://localhost:8081/apis/${articleId}/${username}`)
         .then((response) => {
           // console.log(response);
           return response.json();
