@@ -179,6 +179,9 @@ public class ArticleController {
     @GetMapping("/search/{word}/{username}")
     public List<Article> searchArticlesWithWord(@PathVariable String word,@PathVariable String username) throws IOException {
         if(!word.contains("--")) {
+            System.out.println("search1");
+//            word=word.replace("XNXN","/");
+//            System.out.println(word);
             SearchResponse<Article> searchResponse = articleSearchService.matchArticleWithWordService(word);
 
             SearchResponse<Article> searchResponse2 = articleSearchService.fuzzyHeadingSearch(word);
@@ -191,16 +194,25 @@ public class ArticleController {
             List<Article> hlist=articleService.headingInfix(word);  //heading and ispublic substring matching
             List<Article> hlist2=articleService.headingInfix2(word,username); //heading and username substring matching
 
+            List<Article> ab=articleService.finderFunc(word,username);
             List<Article> list = infixFinder(word);  //articlebody and ispublic
             List<Article> list2=articleService.infixFinder2(word,username);  //articlebody and username
 
+            Article a=new Article();
+            a.C_SORT(hlist);
+
+            a.C_SORT(ab);
+
+            a.C_SORT(hlist2);
+
+            a.C_SORT(list2);
+
+            a.C_SORT(list);
+
+            hlist.addAll(ab);
             hlist.addAll(hlist2);
             hlist.addAll(list2);
             hlist.addAll(list);
-
-            Set<Article> set=new LinkedHashSet<>(hlist);
-            hlist.clear();
-            hlist.addAll(set);
 
             if(hlist.isEmpty()){
                 for (Hit<Article> item : listOfHits2) {
@@ -209,43 +221,82 @@ public class ArticleController {
                 for (Hit<Article> item : listOfHits) {
                     hlist.add(item.source());
                 }
-                Article a=new Article();
+
                 a.C_SORT(hlist);
+
                 System.out.println("damn");
+
+                Set<Article> set=new LinkedHashSet<>(hlist);
+                hlist.clear();
+                hlist.addAll(set);
                 return hlist;
             }else{
-                Article a=new Article();
-                a.C_SORT(hlist);
+
+                Set<Article> set=new LinkedHashSet<>(hlist);
+                hlist.clear();
+                hlist.addAll(set);
                 return hlist;
             }
         }else{
+            System.out.println("search 2");
             String query=word.replace("--"," ");
             SearchResponse<Article> searchResponse = articleSearchService.matchAllArticleService(query);
             SearchResponse<Article> searchResponse2=articleSearchService.matchAllHeadingService(query);
+            SearchResponse<Article> searchResponse3 = articleSearchService.matchPhrase(query);
+            SearchResponse<Article> searchResponse4 = articleSearchService.matchPhraseHeading(query);
 
             System.out.println(searchResponse.hits().hits().toString());
 
             List<Hit<Article>> listOfHits = searchResponse.hits().hits();
             List<Hit<Article>> listOfHits2 = searchResponse2.hits().hits();
-            System.out.println("contension");
+            List<Hit<Article>> listOfHits3 = searchResponse3.hits().hits();
+            List<Hit<Article>> listOfHits4 = searchResponse4.hits().hits();
+
 
             List<Article> list = new ArrayList<>();
-
-            for (Hit<Article> item : listOfHits2) {
-                list.add(item.source());
-            }
+            List<Article> list2 = new ArrayList<>();
+            List<Article> list3 = new ArrayList<>();
+            List<Article> list4 = new ArrayList<>();
+            List<Article> list5=articleService.finderFunc(query,username);
 
             for (Hit<Article> item : listOfHits) {
                 list.add(item.source());
             }
 
+            for (Hit<Article> item : listOfHits2) {
+                list2.add(item.source());
+            }
+
+            for (Hit<Article> item : listOfHits3) {
+                list3.add(item.source());
+            }
+
+            for (Hit<Article> item : listOfHits4) {
+                list4.add(item.source());
+            }
+
             Article a=new Article();
 
             a.C_SORT(list);
+            a.C_SORT(list2);
+            a.C_SORT(list3);
+            a.C_SORT(list4);
+            a.C_SORT(list5);
 
-            Set<Article> set=new LinkedHashSet<>(list);
-            list.clear();
-            list.addAll(set);
+//            return list5;
+            if(list3.isEmpty() && list4.isEmpty()){
+                System.out.println("goto 1");
+                list4.addAll(list);
+                list4.addAll(list2);
+            }else{
+                System.out.println("goto 2");
+                list4.addAll(list5);
+                list4.addAll(list3);
+            }
+
+            Set<Article> set=new LinkedHashSet<>(list4);
+            list4.clear();
+            list4.addAll(set);
 
             return list;
 

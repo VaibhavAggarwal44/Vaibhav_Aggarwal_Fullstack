@@ -23,6 +23,20 @@ public class ArticleSearchService {
         return searchResponse;
     }
 
+    public SearchResponse<Article> matchPhrase(String word) throws IOException  {
+        Supplier<Query> supplier= ArticleSearchUtil.supplier3(word);
+        SearchResponse<Article> searchResponse=elasticsearchClient.search(s->s.index("article1").query(supplier.get()),Article.class);
+        System.out.println("elasaticsearch query is: "+supplier.get().toString());
+        return searchResponse;
+    }
+
+    public SearchResponse<Article> matchPhraseHeading(String word) throws IOException  {
+        Supplier<Query> supplier= ArticleSearchUtil.supplier4(word);
+        SearchResponse<Article> searchResponse=elasticsearchClient.search(s->s.index("article1").query(supplier.get()),Article.class);
+        System.out.println("elasaticsearch query is: "+supplier.get().toString());
+        return searchResponse;
+    }
+
     public SearchResponse<Article> matchArticleWithWordService(String word) throws IOException  {
         Supplier<Query> supplier= ArticleSearchUtil.supplierQueryWithWord(word);
         SearchResponse<Article> searchResponse=elasticsearchClient.search(s->s.index("article1").query(supplier.get()),Article.class);

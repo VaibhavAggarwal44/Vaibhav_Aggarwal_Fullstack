@@ -58,6 +58,18 @@ public class ArticleService {
         return articleRepo.findByCreatedByAndIsPublic(username,true);
     }
 
+    public List<Article> finderFunc(String query,String username){
+        Iterable<Article> ab=articleRepo.findAll();
+        List<Article> list=new ArrayList<>();
+
+        for(Article item:ab){
+            if((item.isPublic || item.createdBy.equals(username)) && item.articleBody!=null && item.articleBody.contains(query)){
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
     public List<Article> infixFinder(String query){
         return articleRepo.findByArticleBodyContainingAndIsPublic(query,true);
     }

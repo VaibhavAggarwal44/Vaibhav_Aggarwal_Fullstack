@@ -22,6 +22,26 @@ public class ArticleSearchUtil {
         return matchAllQuery.field("articleBody").query(word).fuzziness("1").build();
     }
 
+    public static MatchPhraseQuery matchPhraseQuery(String word){
+        val matchAllQuery=new MatchPhraseQuery.Builder();
+        return matchAllQuery.field("articleBody").query(word).build();
+    }
+
+    public static Supplier<Query> supplier3(String word){
+        Supplier<Query> supplier=()->Query.of(q->q.matchPhrase(matchPhraseQuery(word)));
+        return supplier;
+    }
+
+    public static MatchPhraseQuery matchPhraseQueryHeading(String word){
+        val matchAllQuery=new MatchPhraseQuery.Builder();
+        return matchAllQuery.field("heading").query(word).build();
+    }
+
+    public static Supplier<Query> supplier4(String word){
+        Supplier<Query> supplier=()->Query.of(q->q.matchPhrase(matchPhraseQueryHeading(word)));
+        return supplier;
+    }
+
     /**
      * This function acts as a supplier function of query made in function matchAllQueryHeading
      */

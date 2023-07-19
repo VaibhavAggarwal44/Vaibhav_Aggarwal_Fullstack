@@ -37,7 +37,7 @@ const AllArticles = () => {
   const recordsPerPage = 4;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = articles.slice(firstIndex, lastIndex);
+  const records = articles?.slice(firstIndex, lastIndex);
   const npage = Math.ceil(articles.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
@@ -97,13 +97,18 @@ const AllArticles = () => {
     setArticles([]);
 
     var str = searchtext.trim();
-    if (str === "") {
+    if (str === "" ) {
       setflag(true);
       handleChange("articles/sortLike/" + username);
       return;
     }
 
+    if(str.includes('/')){
+      return;
+    }
+
     setflag(false);
+    // var query = str.replace("/", " ");
     var query = str.replace(" ", "--");
     const dat = await fetch(
       `http://localhost:8081/apis/search/${query}/${username}`
@@ -178,7 +183,7 @@ const AllArticles = () => {
             </div>
           )}
           {records.length > 0 &&
-            records.map((article, i) => (
+            records.map((article, i) => (article.isPublic || article.createdBy === username) && (
               <Card className="my-3" key={i}>
                 <Card.Header>
                   <h3>{article.heading}</h3>

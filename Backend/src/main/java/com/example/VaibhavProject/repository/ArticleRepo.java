@@ -31,5 +31,4 @@ public interface ArticleRepo extends ElasticsearchRepository<Article,String> {
     List <Article> findByHeadingAndCreatedBy(String s,String username);
 
     List<Article> findByArticleBodyContainingAndCreatedBy(String a,String b);
-
 }

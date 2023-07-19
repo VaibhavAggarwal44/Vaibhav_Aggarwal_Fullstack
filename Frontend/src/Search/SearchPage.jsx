@@ -45,7 +45,7 @@ const SearchBar = () => {
       return;
     }
     let username = localStorage.getItem("username");
-
+    // var query = str.replace("/", "XNXN");
     var query = str.replace(" ", "--");
     const dat = await fetch(
       `http://localhost:8081/apis/search/${query}/${username}`
