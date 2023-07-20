@@ -1,6 +1,7 @@
 package com.example.VaibhavProject.controller;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.example.VaibhavProject.model.Article;
@@ -208,8 +209,7 @@ public class ArticleController {
     public List<Article> searchArticlesWithWord(@PathVariable String word,@PathVariable String username) throws IOException {
         if(!word.contains("--")) {
             System.out.println("search1");
-//            word=word.replace("XNXN","/");
-//            System.out.println(word);
+            word=word.replace("XNX","/");
             SearchResponse<Article> searchResponse = articleSearchService.matchArticleWithWordService(word);
 
             SearchResponse<Article> searchResponse2 = articleSearchService.fuzzyHeadingSearch(word);
@@ -268,6 +268,7 @@ public class ArticleController {
         }else{
             System.out.println("search 2");
             String query=word.replace("--"," ");
+            query=query.replace("XNX","/");
             SearchResponse<Article> searchResponse = articleSearchService.matchAllArticleService(query);
             SearchResponse<Article> searchResponse2=articleSearchService.matchAllHeadingService(query);
             SearchResponse<Article> searchResponse3 = articleSearchService.matchPhrase(query);
@@ -285,7 +286,7 @@ public class ArticleController {
             List<Article> list2 = new ArrayList<>();
             List<Article> list3 = new ArrayList<>();
             List<Article> list4 = new ArrayList<>();
-            List<Article> list5=articleService.finderFunc(query,username);
+//            List<Article> list5=articleService.finderFunc(query,username);
 
             for (Hit<Article> item : listOfHits) {
                 list.add(item.source());
@@ -309,24 +310,30 @@ public class ArticleController {
             a.C_SORT(list2);
             a.C_SORT(list3);
             a.C_SORT(list4);
-            a.C_SORT(list5);
+//            a.C_SORT(list5);
 
 //            return list5;
-            if(list3.isEmpty() && list4.isEmpty()){
-                System.out.println("goto 1");
-                list4.addAll(list);
-                list4.addAll(list2);
-            }else{
-                System.out.println("goto 2");
-                list4.addAll(list5);
-                list4.addAll(list3);
-            }
+//            if(list3.isEmpty() && list4.isEmpty()){
+//                System.out.println("goto 1");
+//                list4.addAll(list);
+//                list4.addAll(list2);
+//            }else{
+//                System.out.println("goto 2");
+////                list4.addAll(list5);
+//                list4.addAll(list3);
+//                list4.addAll(list);
+//                list4.addAll(list2);
+//            }
 
-            Set<Article> set=new LinkedHashSet<>(list4);
-            list4.clear();
-            list4.addAll(set);
+            list2.addAll(list);
+            list2.addAll(list4);
+            list2.addAll(list3);
 
-            return list;
+            Set<Article> set=new LinkedHashSet<>(list2);
+            list2.clear();
+            list2.addAll(set);
+
+            return list2;
 
         }
     }

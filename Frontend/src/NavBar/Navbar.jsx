@@ -48,12 +48,12 @@ function Navbar1() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link onClick={redirectSearch}>
-                <strong>Search</strong>
+            <Nav className="me-auto mx-5">
+              <Nav.Link onClick={redirectSearch} className="mx-2">
+                Search
               </Nav.Link>
 
-              <Nav.Link onClick={redirectViewAll}>View All Articles</Nav.Link>
+              <Nav.Link onClick={redirectViewAll} className="mx-2">View All Articles</Nav.Link>
               <NavDropdown
                 title={localStorage.getItem("username")}
                 id="basic-nav-dropdown"

@@ -47,6 +47,8 @@ const SearchBar = () => {
     let username = localStorage.getItem("username");
     // var query = str.replace("/", "XNXN");
     var query = str.replace(" ", "--");
+    query=query.split("/").join("XNX");
+    // query.replace(/\//g,"");
     const dat = await fetch(
       `http://localhost:8081/apis/search/${query}/${username}`
     )
@@ -91,7 +93,7 @@ const SearchBar = () => {
               </IconContext.Provider>
             </button>
           </div>
-          <h2>Query: {message}</h2>
+          <h3>Query: {message.substring(0,100)}</h3>
 
           
         </form>

@@ -103,13 +103,10 @@ const AllArticles = () => {
       return;
     }
 
-    if(str.includes('/')){
-      return;
-    }
-
     setflag(false);
     // var query = str.replace("/", " ");
     var query = str.replace(" ", "--");
+    query=query.split("/").join("XNX");
     const dat = fetch(
       `http://localhost:8081/apis/search/${query}/${username}`
     )

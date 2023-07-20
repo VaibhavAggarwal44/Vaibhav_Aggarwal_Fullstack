@@ -19,7 +19,7 @@ public class ArticleSearchUtil {
      */
     public static MatchQuery matchAllQuery(String word){
         val matchAllQuery=new MatchQuery.Builder();
-        return matchAllQuery.field("articleBody").query(word).fuzziness("1").build();
+        return matchAllQuery.field("articleBody").query(word).operator(Operator.And).fuzziness("1").build();
     }
 
     public static MatchPhraseQuery matchPhraseQuery(String word){
@@ -55,7 +55,7 @@ public class ArticleSearchUtil {
      */
     public static MatchQuery matchAllQueryHeading(String word){
         val matchAllQuery=new MatchQuery.Builder();
-        return matchAllQuery.field("heading").query(word).fuzziness("1").build();
+        return matchAllQuery.field("heading").query(word).operator(Operator.And).fuzziness("1").build();
     }
 
     /**
