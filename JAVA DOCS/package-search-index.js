@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.example.VaibhavProject"},{"l":"com.example.VaibhavProject.controller"},{"l":"com.example.VaibhavProject.model"},{"l":"com.example.VaibhavProject.repository"},{"l":"com.example.VaibhavProject.service"},{"l":"com.example.VaibhavProject.utils"}];updateSearchResults();
