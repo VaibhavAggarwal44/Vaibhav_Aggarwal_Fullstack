@@ -103,7 +103,7 @@ const Register = () => {
   return (
     <>
       <div className="offset-lg-3 col-lg-6" style={{ marginTop: "100px" }}>
-        <Image src={require("../download.png")} fluid />
+        <Image src={require("../download-removebg-preview.png")} fluid />
         <form onSubmit={handlesubmit}>
           <div className="card">
             <div className="card-header">

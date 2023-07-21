@@ -31,7 +31,7 @@ const Home = () => {
           align="center"
           className="font-setter"
         >
-          <Image src={require("./download.png")} fluid />
+          <Image src={require("./download-removebg-preview.png")} fluid />
           <br />
           SEARCHABLE WEB PORTAL
         </Typography>

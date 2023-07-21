@@ -1,7 +1,5 @@
 package com.example.VaibhavProject.service;
 
-import co.elastic.clients.elasticsearch.core.SearchRequest;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.example.VaibhavProject.model.Article;
 import com.example.VaibhavProject.repository.ArticleRepo;
 import org.elasticsearch.client.RequestOptions;
@@ -30,26 +28,44 @@ public class ArticleService {
         return articleRepo.findByName(id,pageable);
     }
 
+    /**
+     * Returns list of articles createdBy "id"
+     */
     public List<Article> findbyusername(String id){
         return articleRepo.findByCreatedBy(id);
     }
 
+    /**
+     * Returns list of articles that has 'query' in articleBody and isPublic is true
+     */
     public List<Article> searchPublicArticles(String query){
         return articleRepo.findByArticleBodyAndIsPublic(query,true);
     }
 
+    /**
+     * Returns list of public articles or createdBy "id"
+     */
     public List<Article> findPublicArticles(String s){
         return articleRepo.findByIsPublicOrCreatedBy(true,s);
     }
 
+    /**
+     * Returns iterable list of all articles
+     */
     public Iterable<Article> getArticles(){
         return articleRepo.findAll();
     }
 
+    /**
+     * Inserts article in the database
+     */
     public Article insertArticle(Article article) {
         return articleRepo.save(article);
     }
 
+    /**
+     * Returns article that has given id
+     */
     public Article findById(String id) throws NoSuchElementException {
         return articleRepo.findById(id).get();
     }
@@ -70,22 +86,37 @@ public class ArticleService {
         return list;
     }
 
+    /**
+     * This function returns a list of all articles containing 'query' in articleBody and isPublic as true
+     */
     public List<Article> infixFinder(String query){
         return articleRepo.findByArticleBodyContainingAndIsPublic(query,true);
     }
 
+    /**
+     * This function returns a list of all articles containing 'query' in articleBody and createdBy 'username'
+     */
     public List<Article> infixFinder2(String query,String username){
         return articleRepo.findByArticleBodyContainingAndCreatedBy(query,username);
     }
 
+    /**
+     * This function returns a list of all articles containing 'query' in heading and isPublic as true
+     */
     public List<Article> headingInfix(String query){
         return articleRepo.findByHeadingContainingAndIsPublic(query,true);
     }
 
+    /**
+     * This function returns a list of all articles containing 'query' in heading and createdBy 'username'
+     */
     public List<Article> headingInfix2(String query ,String username){
         return articleRepo.findByHeadingAndCreatedBy(query,username);
     }
 
+    /**
+     * This function handles likes of an article by performing necessary operations
+     */
     public Article updateArticleLikes(Article article, String id,String likedBy) {
         Article article1  = articleRepo.findById(id).get();
 
@@ -113,6 +144,9 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * This function reduces likes by 1
+     */
     public Article unlike(Article article,String id,String likedBy){
         Article article1  = articleRepo.findById(id).get();
         article1.setLikes(article.getLikes()-1);
@@ -127,6 +161,9 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * This function reduces dislike by one
+     */
     public Article undislike(Article article,String id,String dislikedBy){
         Article article1  = articleRepo.findById(id).get();
         article1.setDislikes(article.getDislikes()-1);
@@ -141,6 +178,9 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * This function handles dislike request made from the frontend
+     */
     public Article updateArticleDislikes(Article article, String id,String dislikedBy) {
         System.out.println("check");
         Article article1  = articleRepo.findById(id).get();
@@ -168,7 +208,9 @@ public class ArticleService {
         return article1;
     }
 
-
+    /**
+     * This function increases views of article by 1 and updates it on database
+     */
     public Article updateArticleViews(Article article, String id) {
         Article article1  = articleRepo.findById(id).get();
         article1.setViews(article.getViews()+1);
@@ -179,6 +221,9 @@ public class ArticleService {
         return article1;
     }
 
+    /**
+     * This function reduces views of an article by 1
+     */
     public void updateArticleViewsTest(Article article, String id) {
         Article article1  = articleRepo.findById(id).get();
         article1.setViews(article.getViews()-1);
@@ -188,11 +233,17 @@ public class ArticleService {
         return ;
     }
 
+    /**
+     * This function updates an existing article or creates new one
+     */
     public Article updateArticle(Article article) {
         articleRepo.save(article);
         return article;
     }
 
+    /**
+     * This function deletes all articles
+     */
     public void deleteArticle(){
         articleRepo.deleteAll();
     }

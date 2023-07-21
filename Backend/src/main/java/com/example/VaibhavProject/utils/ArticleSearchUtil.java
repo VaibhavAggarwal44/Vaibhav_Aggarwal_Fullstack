@@ -15,28 +15,40 @@ public class ArticleSearchUtil {
     }
 
     /**
-     * This function performs matchAllQuery on articleBody field
+     * This function performs matchQuery on articleBody field with operator AND and fuzziness 1
      */
     public static MatchQuery matchAllQuery(String word){
         val matchAllQuery=new MatchQuery.Builder();
         return matchAllQuery.field("articleBody").query(word).operator(Operator.And).fuzziness("1").build();
     }
 
+    /**
+     * This function performs matchPhraseQuery on articleBody field
+     */
     public static MatchPhraseQuery matchPhraseQuery(String word){
         val matchAllQuery=new MatchPhraseQuery.Builder();
         return matchAllQuery.field("articleBody").query(word).build();
     }
 
+    /**
+     * This function acts as a supplier of query built in function matchPhraseQuery
+     */
     public static Supplier<Query> supplier3(String word){
         Supplier<Query> supplier=()->Query.of(q->q.matchPhrase(matchPhraseQuery(word)));
         return supplier;
     }
 
+    /**
+     * This function performs matchPhraseQuery on heading field
+     */
     public static MatchPhraseQuery matchPhraseQueryHeading(String word){
         val matchAllQuery=new MatchPhraseQuery.Builder();
         return matchAllQuery.field("heading").query(word).build();
     }
 
+    /**
+     * This function acts as a supplier of query built in function matchPhraseQueryHeading
+     */
     public static Supplier<Query> supplier4(String word){
         Supplier<Query> supplier=()->Query.of(q->q.matchPhrase(matchPhraseQueryHeading(word)));
         return supplier;
@@ -51,11 +63,27 @@ public class ArticleSearchUtil {
     }
 
     /**
-     * This function builds and returns matchquery on heading field
+     * This function builds and returns matchquery on heading field with operator AND and fuzziness 1
      */
     public static MatchQuery matchAllQueryHeading(String word){
         val matchAllQuery=new MatchQuery.Builder();
         return matchAllQuery.field("heading").query(word).operator(Operator.And).fuzziness("1").build();
+    }
+
+    /**
+     * This function acts as a supplier of query built in function matchAllQueryOR
+     */
+    public static Supplier<Query> supplier6(String word){
+        Supplier<Query> supplier=()->Query.of(q->q.match(matchAllQueryOR(word)));
+        return supplier;
+    }
+
+    /**
+     * This function builds and returns matchquery on articleBody field with operator OR
+     */
+    public static MatchQuery matchAllQueryOR(String word){
+        val matchAllQuery=new MatchQuery.Builder();
+        return matchAllQuery.field("articleBody").query(word).operator(Operator.Or).build();
     }
 
     /**
@@ -67,7 +95,7 @@ public class ArticleSearchUtil {
     }
 
     /**
-     * This function builds and returns fuzzyquery on articleBody field
+     * This function builds and returns fuzzyquery on articleBody field with fuzziness 2
      */
     public static FuzzyQuery matchAllQueryWithWord(String word){
         val matchQuery=new FuzzyQuery.Builder();
@@ -75,7 +103,7 @@ public class ArticleSearchUtil {
     }
 
     /**
-     * This function builds and returns fuzzyquery on heading field
+     * This function builds and returns fuzzyquery on heading field with fuzziness 2
      */
     public static FuzzyQuery headingFuzzySearch(String word){
         val matchQuery=new FuzzyQuery.Builder();

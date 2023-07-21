@@ -71,8 +71,6 @@ li{
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 100vh; */
-  /* background: green; */
 }
 
 .font-setter{
@@ -83,6 +81,3 @@ li{
   cursor: pointer !important;
 }
 
-/* .bg-setter{
-  background-image: url('background-image.jpeg');
-} */

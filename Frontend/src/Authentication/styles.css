@@ -1,3 +1,7 @@
 .card-footer button{
     width:10rem !important;
 }
+
+body{
+    background-color: aliceblue;
+}

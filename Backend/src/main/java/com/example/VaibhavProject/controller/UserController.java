@@ -47,7 +47,8 @@ public class UserController {
     }
 
     /**
-     *  this function
+     *  this function performs our login functionality. It checks if the user recieved in request body exists in
+     *  database or not.
      */
     @PostMapping("/login")
     public User loginUser(@RequestBody User user) throws NoSuchElementException {
@@ -70,6 +71,15 @@ public class UserController {
                 return u2;
             }
         }
+    }
+
+    /**
+     * Returns user by user id
+     */
+    @GetMapping("/getp/{id}")
+    public User getp(@PathVariable String id){
+        System.out.println(userService.findById(id));
+        return userService.findById(id);
     }
 
 }

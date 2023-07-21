@@ -40,6 +40,9 @@ public class Article {
 
     public String dislikedBy;
 
+    /**
+     * Generates unique id for our article.
+     */
     public static String generateUniqueID() {
         // Generate a random UUID (Universally Unique Identifier)
         UUID uuid = UUID.randomUUID();
@@ -53,6 +56,10 @@ public class Article {
         this.dislikedBy="";
         this.id=generateUniqueID();
     }
+
+    /**
+     *  Custom comparator that compares articles on the basis of likes, views and dislikes.
+     */
     static class customComparator implements Comparator<Article>{
         public int compare(Article o1, Article o2){
             if(o1.getLikes()>o2.getLikes()){
@@ -85,7 +92,9 @@ public class Article {
     }
 
 
-
+    /**
+     * comparator to sort on the basis of likes
+     */
     static class LikeComparator implements Comparator<Article> {
         @Override
         public int compare(Article article1, Article article2) {
@@ -93,6 +102,9 @@ public class Article {
         }
     }
 
+    /**
+     * comparator to sort on the basis of dislikes
+     */
     static class DisLikeComparator implements Comparator<Article> {
         @Override
         public int compare(Article article1, Article article2) {
@@ -100,6 +112,9 @@ public class Article {
         }
     }
 
+    /**
+     * comparator to sort on the basis of views
+     */
     static class ViewComparator implements Comparator<Article> {
         @Override
         public int compare(Article article1, Article article2) {
@@ -107,21 +122,33 @@ public class Article {
         }
     }
 
+    /**
+     * function to sort on the basis of likes
+     */
     public List<Article> L_SORT(List<Article> list){
         Collections.sort(list,new Article.LikeComparator());
         return list;
     }
 
+    /**
+     * function to apply our custom sort
+     */
     public List<Article> C_SORT(List<Article> list){
         Collections.sort(list,new Article.customComparator());
         return list;
     }
 
+    /**
+     * comparator to sort on the basis of dislikes
+     */
     public List<Article> D_SORT(List<Article> list){
         Collections.sort(list,new Article.DisLikeComparator());
         return list;
     }
 
+    /**
+     * comparator to sort on the basis of views
+     */
     public List<Article> V_SORT(List<Article> list){
         Collections.sort(list,new Article.ViewComparator());
         return list;

@@ -135,7 +135,7 @@ public class ArticleController {
 
     /**
      * This function helps us update likes or dislikes of an article. id is article id, user is the username
-     * and ld is like or dislike whichever we are performing.
+     * and ld is like, dislike, unlike or undislike whichever we are performing.
      * @param id
      * @param user
      * @param ld
@@ -161,7 +161,6 @@ public class ArticleController {
     /**
      * This function returns an article with given article id passed as PathVariable.
      * It also increases its views by 1.
-     * @param id
      */
     @GetMapping("/{id}/{username}")
     public Article updateArticleView(@PathVariable String id,@PathVariable String username){
@@ -273,6 +272,7 @@ public class ArticleController {
             SearchResponse<Article> searchResponse2=articleSearchService.matchAllHeadingService(query);
             SearchResponse<Article> searchResponse3 = articleSearchService.matchPhrase(query);
             SearchResponse<Article> searchResponse4 = articleSearchService.matchPhraseHeading(query);
+            SearchResponse<Article> searchResponse5 = articleSearchService.matchAllQueryOR(query);
 
             System.out.println(searchResponse.hits().hits().toString());
 
@@ -280,13 +280,14 @@ public class ArticleController {
             List<Hit<Article>> listOfHits2 = searchResponse2.hits().hits();
             List<Hit<Article>> listOfHits3 = searchResponse3.hits().hits();
             List<Hit<Article>> listOfHits4 = searchResponse4.hits().hits();
+            List<Hit<Article>> listOfHits5 = searchResponse5.hits().hits();
 
 
             List<Article> list = new ArrayList<>();
             List<Article> list2 = new ArrayList<>();
             List<Article> list3 = new ArrayList<>();
             List<Article> list4 = new ArrayList<>();
-//            List<Article> list5=articleService.finderFunc(query,username);
+            List<Article> list5=new ArrayList<>();
 
             for (Hit<Article> item : listOfHits) {
                 list.add(item.source());
@@ -304,30 +305,23 @@ public class ArticleController {
                 list4.add(item.source());
             }
 
+            for (Hit<Article> item : listOfHits5) {
+                list5.add(item.source());
+            }
+
             Article a=new Article();
 
             a.C_SORT(list);
             a.C_SORT(list2);
             a.C_SORT(list3);
             a.C_SORT(list4);
-//            a.C_SORT(list5);
 
-//            return list5;
-//            if(list3.isEmpty() && list4.isEmpty()){
-//                System.out.println("goto 1");
-//                list4.addAll(list);
-//                list4.addAll(list2);
-//            }else{
-//                System.out.println("goto 2");
-////                list4.addAll(list5);
-//                list4.addAll(list3);
-//                list4.addAll(list);
-//                list4.addAll(list2);
-//            }
+            a.C_SORT(list5);
 
             list2.addAll(list);
             list2.addAll(list4);
             list2.addAll(list3);
+            list2.addAll(list5);
 
             Set<Article> set=new LinkedHashSet<>(list2);
             list2.clear();

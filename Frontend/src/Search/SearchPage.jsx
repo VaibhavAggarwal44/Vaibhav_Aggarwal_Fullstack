@@ -93,7 +93,7 @@ const SearchBar = () => {
               </IconContext.Provider>
             </button>
           </div>
-          <h3>Query: {message.substring(0,100)}</h3>
+          <h5>Query: {message.substring(0,100)}</h5>
 
           
         </form>

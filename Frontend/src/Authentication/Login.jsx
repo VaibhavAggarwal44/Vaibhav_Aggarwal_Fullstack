@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "react-bootstrap/Image";
 import "./styles.css";
+import Typewriterj from "../Typewriter";
 
 const Login = () => {
   const [username, usernameupdate] = useState("");
@@ -70,11 +71,13 @@ const Login = () => {
     <>
       <div className="row">
         <div className="offset-lg-3 col-lg-6" style={{ marginTop: "100px" }}>
-          <Image src={require("../download.png")} fluid />
+          
+          <Image src={require("../download-removebg-preview.png")} fluid />
           <form onSubmit={ProceedLogin} className="container">
             <div className="card">
               <div className="card-header">
-                <h2>User Login</h2>
+                <h2>Searchable Web Portal Login</h2>
+                {/* <h3>LOGIN</h3> */}
               </div>
               <div className="card-body">
                 <div className="form-group">
@@ -110,6 +113,7 @@ const Login = () => {
               </div>
             </div>
           </form>
+          
         </div>
         
         <ToastContainer />
